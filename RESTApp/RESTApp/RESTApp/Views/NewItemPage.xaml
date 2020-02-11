@@ -1,0 +1,38 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="RESTApp.Views.NewItemPage"
+             Title="New Item">
+    
+    <ContentPage.ToolbarItems>
+        <ToolbarItem x:Name="toolbarItem_Cancel" Text="Cancel">
+            <ToolbarItem.Icon>
+                <OnPlatform x:TypeArguments="FileImageSource">
+                    <On Platform="UWP" Value="cancel.png"/>
+                </OnPlatform>
+            </ToolbarItem.Icon>
+        </ToolbarItem>
+        <ToolbarItem x:Name="toolbarItem_Save" Text="Save">
+            <ToolbarItem.Icon>
+                <OnPlatform x:TypeArguments="FileImageSource">
+                    <On Platform="UWP" Value="save.png"/>
+                </OnPlatform>
+            </ToolbarItem.Icon>
+        </ToolbarItem>
+    </ContentPage.ToolbarItems>
+    
+    <ContentPage.Content>
+        <ScrollView>
+            <StackLayout Spacing="20" Padding="15">
+                <Label Text="Model name" FontSize="Medium" />
+                <Entry x:Name="entry_ModelName" Text="{Binding Item.ModelName}" FontSize="Small" />
+                <Label Text="Manufacturer name" FontSize="Medium" />
+                <Entry x:Name="entry_ManufacturerName" Text="{Binding Item.ManufacturerName}" FontSize="Small" Margin="0" />
+                <Label Text="Origin country" FontSize="Medium" />
+                <Entry x:Name="entry_OriginCountry" Text="{Binding Item.OriginCountry}" FontSize="Small" Margin="0" />
+                <Label Text="Price" FontSize="Medium" />
+                <Entry x:Name="entry_Price" Text="{Binding Item.Price}" FontSize="Small" Margin="0" />
+            </StackLayout>
+        </ScrollView>
+    </ContentPage.Content>
+</ContentPage>

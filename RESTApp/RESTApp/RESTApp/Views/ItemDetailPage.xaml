@@ -1,0 +1,43 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="RESTApp.Views.ItemDetailPage"
+             Title="{Binding Title}">
+    <ScrollView>
+        <StackLayout Spacing="20" Padding="15">
+            <Label Text="Model name:" FontSize="Medium" />
+            <Entry x:Name="entry_ModelName" Text="{Binding Item.ModelName}" FontSize="Small" IsReadOnly="True"/>
+            <Label Text="Manufacturer name:" FontSize="Medium" />
+            <Entry x:Name="entry_ManufacturerName" Text="{Binding Item.ManufacturerName}" FontSize="Small" IsReadOnly="True"/>
+            <Label Text="Origin country:" FontSize="Medium" />
+            <Entry x:Name="entry_OriginCountry" Text="{Binding Item.OriginCountry}" FontSize="Small" IsReadOnly="True"/>
+            <Label Text="Quantity:" FontSize="Medium" />
+            <Label x:Name="label_Quantity" Text="{Binding Item.Quantity}" FontSize="Small"/>
+            <Label x:Name="label_InfoForUser" Text="" FontSize="15" HorizontalTextAlignment="Center"/>
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="*" />
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="2*"/>
+                    <RowDefinition Height="2*"/>
+                    <RowDefinition Height="1*"/>
+                    <RowDefinition Height="1*"/>
+                </Grid.RowDefinitions>
+                
+                <Label Text="Price:" Grid.Row="0" Grid.Column="0" FontSize="Medium" />
+                <Entry x:Name="entry_Price" Grid.Row="0" Grid.Column="0" Text="{Binding Item.Price}" FontSize="Medium" IsReadOnly="True"/>
+                <Label x:Name="label_CountryTag" Grid.Row="0" Grid.Column="1" FontSize="Large" />
+                
+                <Entry x:Name="entry_QuantityChange" Grid.Row="1" Grid.Column="0" Placeholder="Quantity change" />
+                <Button x:Name="button_ChangeQuantity" Grid.Row="1" Grid.Column="1" Text="Change quantity" BackgroundColor="#2296F3"/>
+                
+                <Button x:Name="button_ChangeDetails" Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="2"  Text="Change details" />
+                <Button x:Name="button_UpdateDetails" Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="2"  Text="Update details" IsVisible="False" BackgroundColor="#2296F3"/>
+                
+                <Button x:Name="button_DeleteItem" Grid.Row="3" Grid.Column="0" Grid.ColumnSpan="2"  Text="Delete item" BackgroundColor="Red"/>
+            </Grid>
+        </StackLayout>
+    </ScrollView>
+</ContentPage>

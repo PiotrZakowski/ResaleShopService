@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="becb7a9117d84f6da83e9ca1e2c27c1e" Name="Diagram1">
+        <EntityTypeShape EntityType="IUMdbModel.Products" Width="1.75" PointX="8.125" PointY="1.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="IUMdbModel.UserRoles" Width="1.5" PointX="1.125" PointY="1.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="IUMdbModel.Users" Width="1.5" PointX="6" PointY="0.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="IUMdbModel.Workplaces" Width="1.5" PointX="3.625" PointY="0.75" IsExpanded="true" />
+        <AssociationConnector Association="IUMdbModel.FK_Workplaces_UserRoles" ManuallyRouted="false" />
+        <AssociationConnector Association="IUMdbModel.FK_Workplaces_Users" ManuallyRouted="false" />
+        <EntityTypeShape EntityType="IUMdbModel.Prices" Width="1.5" PointX="10.625" PointY="1.875" />
+        <AssociationConnector Association="IUMdbModel.FK_Prices_ToProducts" />
+        <EntityTypeShape EntityType="IUMdbModel.Countries" Width="1.5" PointX="8.375" PointY="4.125" />
+        <AssociationConnector Association="IUMdbModel.FK_Prices_ToCountries" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

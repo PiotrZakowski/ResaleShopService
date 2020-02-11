@@ -1,0 +1,359 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="IUMdbModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Countries">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="CountryName" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="CountryTag" Type="varchar" MaxLength="8" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Prices">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ProductId" Type="int" Nullable="false" />
+          <Property Name="CountryId" Type="int" Nullable="false" />
+          <Property Name="Price" Type="money" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Products">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ManufacturerName" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="ModelName" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="Price" Type="money" />
+          <Property Name="Quantity" Type="int" Nullable="false" />
+          <Property Name="OriginCountry" Type="varchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="UserRoles">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="RoleName" Type="varchar" MaxLength="24" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Users">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Username" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="Password" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="GoogleId" Type="varchar" MaxLength="200" />
+          <Property Name="RefreshToken" Type="varchar(max)" />
+          <Property Name="BearerToken" Type="varchar(max)" />
+        </EntityType>
+        <EntityType Name="Workplaces">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="UserId" Type="int" Nullable="false" />
+          <Property Name="UserRoleId" Type="int" Nullable="false" />
+        </EntityType>
+        <Association Name="FK_Prices_ToCountries">
+          <End Role="Countries" Type="Self.Countries" Multiplicity="1" />
+          <End Role="Prices" Type="Self.Prices" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Countries">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Prices">
+              <PropertyRef Name="CountryId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Prices_ToProducts">
+          <End Role="Products" Type="Self.Products" Multiplicity="1" />
+          <End Role="Prices" Type="Self.Prices" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Products">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Prices">
+              <PropertyRef Name="ProductId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Workplaces_UserRoles">
+          <End Role="UserRoles" Type="Self.UserRoles" Multiplicity="1" />
+          <End Role="Workplaces" Type="Self.Workplaces" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="UserRoles">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Workplaces">
+              <PropertyRef Name="UserRoleId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Workplaces_Users">
+          <End Role="Users" Type="Self.Users" Multiplicity="1" />
+          <End Role="Workplaces" Type="Self.Workplaces" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Users">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Workplaces">
+              <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="IUMdbModelStoreContainer">
+          <EntitySet Name="Countries" EntityType="Self.Countries" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Prices" EntityType="Self.Prices" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Products" EntityType="Self.Products" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="UserRoles" EntityType="Self.UserRoles" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Users" EntityType="Self.Users" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Workplaces" EntityType="Self.Workplaces" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_Prices_ToCountries" Association="Self.FK_Prices_ToCountries">
+            <End Role="Countries" EntitySet="Countries" />
+            <End Role="Prices" EntitySet="Prices" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Prices_ToProducts" Association="Self.FK_Prices_ToProducts">
+            <End Role="Products" EntitySet="Products" />
+            <End Role="Prices" EntitySet="Prices" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Workplaces_UserRoles" Association="Self.FK_Workplaces_UserRoles">
+            <End Role="UserRoles" EntitySet="UserRoles" />
+            <End Role="Workplaces" EntitySet="Workplaces" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Workplaces_Users" Association="Self.FK_Workplaces_Users">
+            <End Role="Users" EntitySet="Users" />
+            <End Role="Workplaces" EntitySet="Workplaces" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="IUMdbModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="Products">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ManufacturerName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="ModelName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Price" Type="Decimal" Precision="19" Scale="4" />
+          <Property Name="Quantity" Type="Int32" Nullable="false" />
+          <Property Name="OriginCountry" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <EntityType Name="UserRoles">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="RoleName" Type="String" MaxLength="24" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="Workplaces" Relationship="Self.FK_Workplaces_UserRoles" FromRole="UserRoles" ToRole="Workplaces" />
+        </EntityType>
+        <EntityType Name="Users">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Username" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Password" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="RefreshToken" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="BearerToken" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Workplaces" Relationship="Self.FK_Workplaces_Users" FromRole="Users" ToRole="Workplaces" />
+          <Property Name="GoogleId" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <EntityType Name="Workplaces">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="UserId" Type="Int32" Nullable="false" />
+          <Property Name="UserRoleId" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="UserRoles" Relationship="Self.FK_Workplaces_UserRoles" FromRole="Workplaces" ToRole="UserRoles" />
+          <NavigationProperty Name="Users" Relationship="Self.FK_Workplaces_Users" FromRole="Workplaces" ToRole="Users" />
+        </EntityType>
+        <Association Name="FK_Workplaces_UserRoles">
+          <End Role="UserRoles" Type="Self.UserRoles" Multiplicity="1" />
+          <End Role="Workplaces" Type="Self.Workplaces" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="UserRoles">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Workplaces">
+              <PropertyRef Name="UserRoleId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Workplaces_Users">
+          <End Role="Users" Type="Self.Users" Multiplicity="1" />
+          <End Role="Workplaces" Type="Self.Workplaces" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Users">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Workplaces">
+              <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="IUMdbEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Products" EntityType="Self.Products" />
+          <EntitySet Name="UserRoles" EntityType="Self.UserRoles" />
+          <EntitySet Name="Users" EntityType="Self.Users" />
+          <EntitySet Name="Workplaces" EntityType="Self.Workplaces" />
+          <AssociationSet Name="FK_Workplaces_UserRoles" Association="Self.FK_Workplaces_UserRoles">
+            <End Role="UserRoles" EntitySet="UserRoles" />
+            <End Role="Workplaces" EntitySet="Workplaces" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Workplaces_Users" Association="Self.FK_Workplaces_Users">
+            <End Role="Users" EntitySet="Users" />
+            <End Role="Workplaces" EntitySet="Workplaces" />
+          </AssociationSet>
+          <EntitySet Name="Prices" EntityType="IUMdbModel.Prices" />
+          <AssociationSet Name="FK_Prices_ToProducts" Association="IUMdbModel.FK_Prices_ToProducts">
+            <End Role="Products" EntitySet="Products" />
+            <End Role="Prices" EntitySet="Prices" />
+          </AssociationSet>
+          <EntitySet Name="Countries" EntityType="IUMdbModel.Countries" />
+          <AssociationSet Name="FK_Prices_ToCountries" Association="IUMdbModel.FK_Prices_ToCountries">
+            <End Role="Countries" EntitySet="Countries" />
+            <End Role="Prices" EntitySet="Prices" />
+          </AssociationSet>
+        </EntityContainer>
+        <EntityType Name="Prices">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ProductId" Type="Int32" Nullable="false" />
+          <Property Name="Price" Type="Decimal" Nullable="false" Precision="19" Scale="4" />
+          <NavigationProperty Name="Products" Relationship="IUMdbModel.FK_Prices_ToProducts" FromRole="Prices" ToRole="Products" />
+          <Property Name="CountryId" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Countries" Relationship="IUMdbModel.FK_Prices_ToCountries" FromRole="Prices" ToRole="Countries" />
+        </EntityType>
+        <Association Name="FK_Prices_ToProducts">
+          <End Type="IUMdbModel.Products" Role="Products" Multiplicity="1" />
+          <End Type="IUMdbModel.Prices" Role="Prices" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Products">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Prices">
+              <PropertyRef Name="ProductId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="Countries">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="CountryName" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="CountryTag" Type="String" Nullable="false" MaxLength="8" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <Association Name="FK_Prices_ToCountries">
+          <End Type="IUMdbModel.Countries" Role="Countries" Multiplicity="1" />
+          <End Type="IUMdbModel.Prices" Role="Prices" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Countries">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Prices">
+              <PropertyRef Name="CountryId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="IUMdbModelStoreContainer" CdmEntityContainer="IUMdbEntities">
+          <EntitySetMapping Name="Products">
+            <EntityTypeMapping TypeName="IUMdbModel.Products">
+              <MappingFragment StoreEntitySet="Products">
+                <ScalarProperty Name="OriginCountry" ColumnName="OriginCountry" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="ManufacturerName" ColumnName="ManufacturerName" />
+                <ScalarProperty Name="ModelName" ColumnName="ModelName" />
+                <ScalarProperty Name="Price" ColumnName="Price" />
+                <ScalarProperty Name="Quantity" ColumnName="Quantity" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="UserRoles">
+            <EntityTypeMapping TypeName="IUMdbModel.UserRoles">
+              <MappingFragment StoreEntitySet="UserRoles">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="RoleName" ColumnName="RoleName" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Users">
+            <EntityTypeMapping TypeName="IUMdbModel.Users">
+              <MappingFragment StoreEntitySet="Users">
+                <ScalarProperty Name="GoogleId" ColumnName="GoogleId" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Username" ColumnName="Username" />
+                <ScalarProperty Name="Password" ColumnName="Password" />
+                <ScalarProperty Name="RefreshToken" ColumnName="RefreshToken" />
+                <ScalarProperty Name="BearerToken" ColumnName="BearerToken" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Workplaces">
+            <EntityTypeMapping TypeName="IUMdbModel.Workplaces">
+              <MappingFragment StoreEntitySet="Workplaces">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="UserId" ColumnName="UserId" />
+                <ScalarProperty Name="UserRoleId" ColumnName="UserRoleId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Prices">
+            <EntityTypeMapping TypeName="IUMdbModel.Prices">
+              <MappingFragment StoreEntitySet="Prices">
+                <ScalarProperty Name="CountryId" ColumnName="CountryId" />
+                <ScalarProperty Name="Price" ColumnName="Price" />
+                <ScalarProperty Name="ProductId" ColumnName="ProductId" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Countries">
+            <EntityTypeMapping TypeName="IUMdbModel.Countries">
+              <MappingFragment StoreEntitySet="Countries">
+                <ScalarProperty Name="CountryTag" ColumnName="CountryTag" />
+                <ScalarProperty Name="CountryName" ColumnName="CountryName" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="false" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>
